@@ -1,0 +1,19 @@
+ #gamefield {
+     width: 320px;
+     height: 320px;
+     border: 4px solid #333;
+     margin: 50px auto;
+     background-color: #e0e0e0;
+     position: relative;
+ }
+
+#player {
+     width: 32px;
+     height: 32px;
+     position: absolute;
+     top: 0;
+     left: 0;
+     background-image: url("characters/Characters/Character\ 1.png");
+     background-position: 0 0;
+     background-size: 400% 400%;
+ }
