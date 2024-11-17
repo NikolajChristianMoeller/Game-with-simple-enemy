@@ -1,11 +1,12 @@
- #gamefield {
-     width: 320px;
-     height: 320px;
-     border: 4px solid #333;
-     margin: 50px auto;
-     background-color: #e0e0e0;
-     position: relative;
- }
+#gamefield {
+    width: 320px;  /* Match med fieldWidth */
+    height: 320px; /* Match med fieldHeight */
+    border: 4px solid #333;
+    margin: 50px auto;
+    background-color: #e0e0e0;
+    position: relative;
+}
+
 
 #player {
      width: 32px;
@@ -19,14 +20,31 @@
      image-rendering: pixelated;
  }
 
- #enemy{
-     width: 32px;
-     height: 32px;
-     position: absolute;
-     top: 0;
-     right: 0;
-     background-image: url("Characters/Characters/Character\ 5.png");
-     background-position: 0 0;
-     background-size: 400% 400%;
-     image-rendering: pixelated;
+#enemy {
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    top: 100px;
+    left: 200px;
+    background-image: url("Characters/Characters/Character\ 5.png");
+    background-position: 0 0;
+    background-size: 400% 400%;
+    image-rendering: pixelated;
+}
+
+
+ #player.collision {
+     animation: blink 0.2s infinite;
+ }
+
+ @keyframes blink {
+
+     0%,
+     100% {
+         opacity: 1;
+     }
+
+     50% {
+         opacity: 0;
+     }
  }

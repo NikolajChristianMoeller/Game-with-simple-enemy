@@ -8,6 +8,16 @@ const player = {
   speed: 300,
 };
 
+const enemy = {
+  x: 144,
+  y: 50,
+  width: 32,
+  height: 32,
+  speed: 100,
+  direction: 1,
+};
+
+
 const controls = {
   left: false,
   right: false,
@@ -34,17 +44,22 @@ function handleKeyUp(event) {
 
 let lastTime = 0;
 
-const fieldWidth = 800; // Example field width
-const fieldHeight = 600; 
+const fieldWidth = 320;
+const fieldHeight = 320;
 
 function init() {
-requestAnimationFrame(tick);
-console.log("Game is running");
+  requestAnimationFrame(tick);
+  console.log("Game is running");
 }
 
 function displayPlayer() {
   const visualPlayer = document.getElementById("player");
   visualPlayer.style.translate = `${player.x}px ${player.y}px`;
+}
+
+function displayEnemy() {
+  const visualEnemy = document.getElementById("enemy");
+  visualEnemy.style.translate = `${enemy.x}px ${enemy.y}px`;
 }
 
 function tick(timeStamp) {
@@ -56,27 +71,41 @@ function tick(timeStamp) {
   lastTime = currentTime;
 
   movePlayer(deltaTime);
+  moveEnemy(deltaTime);
+  checkCollision();
 
-  lastTime = currentTime;
   displayPlayer();
+  displayEnemy();
 }
 
 function movePlayer(deltaTime) {
-    const newPosition = {x: player.x, y:player.y}
-    if(canMove(newPosition)) {
-    if (controls.left) player.x -= player.speed * deltaTime;
-    if (controls.right) player.x += player.speed * deltaTime;
-    if (controls.up) player.y -= player.speed * deltaTime;
-    if (controls.down) player.y += player.speed * deltaTime;
+  if (controls.left) player.x -= player.speed * deltaTime;
+  if (controls.right) player.x += player.speed * deltaTime;
+  if (controls.up) player.y -= player.speed * deltaTime;
+  if (controls.down) player.y += player.speed * deltaTime;
 
-    }
+  player.x = Math.max(0, Math.min(fieldWidth - 32, player.x));
+  player.y = Math.max(0, Math.min(fieldHeight - 32, player.y));
 }
 
-function canMove(position) {
-  return (
-    position.x >= 0 &&
-    position.x <= fieldWidth &&
-    position.y >= 0 &&
-    position.y <= fieldHeight
-  );
+function moveEnemy(deltaTime) {
+  enemy.y += enemy.speed * deltaTime * enemy.direction;
+
+  if (enemy.y <= 0 || enemy.y >= fieldHeight - enemy.height) {
+    enemy.direction *= -1;
+  }
+}
+
+function checkCollision() {
+  const isColliding =
+    player.x < enemy.x + enemy.width &&
+    player.x + 32 > enemy.x &&
+    player.y < enemy.y + enemy.height &&
+    player.y + 32 > enemy.y;
+
+  if (isColliding) {
+    document.getElementById("player").classList.add("collision");
+  } else {
+    document.getElementById("player").classList.remove("collision");
+  }
 }
