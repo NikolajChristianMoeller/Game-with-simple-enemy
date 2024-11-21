@@ -17,7 +17,6 @@ const enemy = {
   direction: 1,
 };
 
-
 const controls = {
   left: false,
   right: false,
@@ -109,3 +108,4 @@ function checkCollision() {
     document.getElementById("player").classList.remove("collision");
   }
 }
+
